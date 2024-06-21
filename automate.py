@@ -49,13 +49,14 @@ while True:
 
   ret2, img_otsu = cv2.threshold(game_window_img, 0, 255, cv2.THRESH_OTSU)
   string_img = img_otsu[230:260, 100:400]
+  string_img = 255 - string_img
   cv2.imwrite('./img/string_img.png', string_img)
   img_org = Image.open('./img/string_img.png')
   builder = pyocr.builders.TextBuilder(tesseract_layout=10)
   result = tool.image_to_string(img_org, lang="jpn", builder=builder)
-  print(result)
-  pyautogui.typewrite(result)
-  time.sleep(1)
+  print(result.lower())
+  pyautogui.typewrite(result.lower())
+  time.sleep(2)
   count += 1
 
 time.sleep(100)
